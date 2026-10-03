@@ -2,111 +2,112 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Почему x² + y² не раскладывается как разность квадратов</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Разность квадратов</title>
   <style>
     :root {
       --bg: #f6f4ef;
       --card: #ffffff;
-      --ink: #1f2328;
-      --muted: #667085;
+      --ink: #20242a;
+      --muted: #697383;
       --accent: #315f86;
       --accent-soft: #e7f0f7;
-      --warn: #a94f42;
+      --warn: #a24b3f;
       --warn-soft: #fae9e5;
       --ok: #397557;
       --ok-soft: #e9f4ee;
       --line: #e3ddd2;
-      --shadow: 0 14px 38px rgba(32, 35, 40, 0.10);
-      --radius-xl: 24px;
-      --radius: 16px;
+      --shadow: 0 10px 30px rgba(32, 35, 40, 0.10);
+      --radius-xl: 22px;
+      --radius: 15px;
     }
 
     * { box-sizing: border-box; }
 
     html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
       overflow-x: hidden;
     }
 
     body {
-      margin: 0;
       min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: linear-gradient(145deg, #fbfaf7 0%, var(--bg) 50%, #edf4f8 100%);
+      background: linear-gradient(145deg, #fbfaf7 0%, var(--bg) 55%, #edf4f8 100%);
       color: var(--ink);
-      display: flex;
-      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
       padding: 10px;
     }
 
     .app {
-      width: min(740px, 100%);
-      max-width: 100%;
-      background: rgba(255, 255, 255, 0.96);
-      border: 1px solid rgba(227, 221, 210, 0.9);
+      width: 100%;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid rgba(227,221,210,0.9);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
 
     header {
-      padding: 20px 18px 14px;
+      padding: 18px 16px 14px;
       border-bottom: 1px solid var(--line);
-      background: linear-gradient(135deg, #ffffff, #f7fbfd);
+      background: linear-gradient(135deg, #fff, #f7fbfd);
     }
 
     .eyebrow {
-      color: var(--accent);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 700;
       margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 650;
     }
 
     h1 {
       margin: 0;
-      font-weight: 650;
-      font-size: clamp(24px, 6.6vw, 38px);
-      line-height: 1.09;
+      font-size: clamp(24px, 7vw, 34px);
+      line-height: 1.08;
       letter-spacing: -0.025em;
+      font-weight: 620;
     }
 
     .lead {
       margin: 10px 0 0;
       color: var(--muted);
-      font-size: clamp(15px, 4vw, 18px);
+      font-size: 15px;
       line-height: 1.42;
     }
 
-    .keep { white-space: nowrap; }
-
-    main {
-      padding: 14px;
-    }
+    main { padding: 12px; }
 
     .card {
+      padding: 13px;
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
-      padding: 15px;
     }
 
     .topline {
       display: flex;
-      align-items: flex-start;
       justify-content: space-between;
-      gap: 10px;
+      align-items: flex-start;
+      gap: 8px;
       margin-bottom: 12px;
     }
 
     .step-title {
       margin: 0;
       color: var(--accent);
-      font-size: clamp(20px, 5.4vw, 29px);
+      font-size: clamp(20px, 5.6vw, 26px);
       line-height: 1.12;
-      font-weight: 700;
-      letter-spacing: -0.015em;
+      font-weight: 680;
     }
 
     .step-badge {
@@ -114,89 +115,88 @@
       background: var(--accent-soft);
       color: var(--accent);
       border-radius: 999px;
-      padding: 7px 10px;
-      font-weight: 700;
-      font-size: 13px;
+      padding: 6px 9px;
+      font-size: 12px;
+      font-weight: 680;
     }
 
-    .formula-shell {
+    .formula-box {
+      width: 100%;
+      max-width: 100%;
+      padding: 16px 8px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: linear-gradient(180deg, #fff, #fbfaf7);
-      padding: 18px 8px;
-      max-width: 100%;
       overflow: hidden;
     }
 
     .formula {
+      width: 100%;
+      max-width: 100%;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(30px, 8.2vw, 54px);
-      line-height: 1.2;
       text-align: center;
-      max-width: 100%;
-      white-space: normal;
-      overflow-wrap: normal;
-      word-break: normal;
+      color: #202020;
+      line-height: 1.22;
+      font-size: clamp(30px, 8vw, 38px);
+      overflow: hidden;
     }
 
-    .formula-line {
+    .formula.mid { font-size: clamp(27px, 7.1vw, 34px); }
+    .formula.small { font-size: clamp(24px, 6.2vw, 30px); }
+
+    .line {
       display: block;
-      white-space: nowrap;
+      width: 100%;
       max-width: 100%;
-      line-height: 1.24;
+      white-space: nowrap;
+      margin: 3px auto;
     }
 
-    .formula.compact {
-      font-size: clamp(27px, 7.3vw, 45px);
-    }
-
-    .formula.tiny {
-      font-size: clamp(25px, 6.6vw, 40px);
-    }
+    .line.tight { margin: 0 auto; }
 
     .term {
       display: inline-block;
       padding: 1px 7px 4px;
-      border-radius: 10px;
+      border-radius: 9px;
     }
 
-    .term-blue { background: var(--accent-soft); color: #244d6d; }
-    .term-green { background: var(--ok-soft); color: #2d6848; }
-    .term-red { background: var(--warn-soft); color: #8f3e34; }
-    .fade { opacity: 0.35; text-decoration: line-through; }
-    .pulse { animation: pulse 0.9s ease-in-out infinite alternate; }
+    .blue { background: var(--accent-soft); color: #244d6d; }
+    .green { background: var(--ok-soft); color: #2d6848; }
+    .red { background: var(--warn-soft); color: #8f3e34; }
+    .fade { opacity: .35; text-decoration: line-through; }
 
+    .pulse { animation: pulse .9s ease-in-out infinite alternate; }
     @keyframes pulse {
       from { transform: translateY(0); box-shadow: 0 0 0 rgba(0,0,0,0); }
-      to { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(49,95,134,0.16); }
+      to { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(49,95,134,.16); }
     }
 
     .explain {
-      margin-top: 12px;
-      padding: 13px 14px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
+      margin-top: 11px;
+      padding: 12px 13px;
       background: #fbfaf7;
-      font-size: clamp(16px, 4.2vw, 20px);
-      line-height: 1.48;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
       color: #30363a;
+      font-size: 16px;
+      line-height: 1.45;
     }
 
     .summary {
-      margin-top: 12px;
-      padding: 13px 14px;
-      border-radius: var(--radius);
-      border: 1px solid #d8e4ec;
+      margin-top: 11px;
+      padding: 12px 13px;
       background: #f5fafc;
-      font-size: clamp(15px, 3.9vw, 18px);
-      line-height: 1.48;
+      border: 1px solid #d8e4ec;
+      border-radius: var(--radius);
       color: #38424a;
+      font-size: 15px;
+      line-height: 1.45;
     }
 
     .summary-title {
       display: block;
       color: #254d67;
-      font-weight: 700;
+      font-weight: 680;
       margin-bottom: 4px;
     }
 
@@ -208,35 +208,32 @@
     .controls {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 9px;
-      margin-top: 12px;
+      gap: 8px;
+      margin-top: 11px;
     }
 
     button {
       appearance: none;
       border: 0;
       border-radius: 999px;
-      padding: 12px 12px;
+      padding: 12px 10px;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 680;
       cursor: pointer;
       background: var(--accent);
       color: white;
-      transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
     }
 
-    button:hover { transform: translateY(-1px); }
-    button:active { transform: translateY(0); }
     button.secondary { background: #e8e3d8; color: #2e2a25; }
     button.warn { background: var(--warn); }
-    button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+    button:disabled { opacity: .45; cursor: default; }
 
     .dots {
       display: flex;
-      gap: 7px;
-      align-items: center;
       justify-content: center;
-      margin-top: 13px;
+      align-items: center;
+      gap: 7px;
+      margin-top: 12px;
     }
 
     .dot {
@@ -244,146 +241,143 @@
       height: 8px;
       border-radius: 50%;
       background: #d0c7b8;
-      transition: all 0.25s ease;
       cursor: pointer;
     }
 
     .dot.active {
-      width: 25px;
+      width: 24px;
       border-radius: 999px;
       background: var(--accent);
     }
 
-    .footer-note {
-      margin-top: 12px;
+    .note {
+      margin-top: 10px;
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.4;
+      font-size: 13px;
+      line-height: 1.38;
       text-align: center;
     }
 
-    @media (min-width: 620px) {
-      body { align-items: center; padding: 16px; }
-      main { padding: 20px; }
-      .card { padding: 20px; }
-      .formula-shell { padding: 22px 12px; }
-      .controls { grid-template-columns: repeat(4, auto); justify-content: center; }
-      button { min-width: 108px; }
+    @media (max-width: 360px) {
+      .page { padding: 6px; }
+      header { padding: 16px 13px 12px; }
+      main { padding: 9px; }
+      .card { padding: 10px; }
+      .formula-box { padding: 14px 6px; }
+      .formula { font-size: 27px; }
+      .formula.mid { font-size: 24px; }
+      .formula.small { font-size: 22px; }
+      .explain { font-size: 15px; }
+      .summary { font-size: 14px; }
+      button { padding: 11px 8px; font-size: 14px; }
     }
 
-    @media (max-width: 380px) {
-      body { padding: 6px; }
-      .app { border-radius: 20px; }
-      header { padding: 17px 14px 13px; }
-      main { padding: 10px; }
-      .card { padding: 12px; border-radius: 20px; }
-      .formula-shell { padding: 16px 6px; }
-      .formula { font-size: clamp(27px, 7.7vw, 34px); }
-      .formula.compact { font-size: clamp(24px, 6.8vw, 31px); }
-      .formula.tiny { font-size: clamp(22px, 6.3vw, 29px); }
-      .step-badge { font-size: 12px; padding: 6px 9px; }
-      button { padding: 11px 10px; }
+    @media (min-width: 700px) {
+      .page { padding: 16px; }
+      body { display: flex; align-items: center; justify-content: center; }
+      .controls { grid-template-columns: repeat(4, auto); justify-content: center; }
+      button { min-width: 105px; }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <div class="eyebrow">Мини-виджет для урока</div>
-      <h1>Почему x² + y² не раскладывается<br>как разность квадратов</h1>
-      <p class="lead">Разность квадратов работает только тогда, когда между квадратами стоит <span class="keep">минус.</span></p>
-    </header>
+  <div class="page">
+    <div class="app">
+      <header>
+        <div class="eyebrow">Мини-виджет для урока</div>
+        <h1>Почему x² + y² не раскладывается<br>как разность квадратов</h1>
+        <p class="lead">Разность квадратов работает только тогда, когда между квадратами стоит минус.</p>
+      </header>
 
-    <main>
-      <section class="card">
-        <div class="topline">
-          <h2 class="step-title" id="stepTitle">Шаг 1. Узнаём формулу</h2>
-          <div class="step-badge" id="stepBadge">1 / 9</div>
+      <main>
+        <section class="card">
+          <div class="topline">
+            <h2 class="step-title" id="stepTitle"></h2>
+            <div class="step-badge" id="stepBadge"></div>
+          </div>
+
+          <div class="formula-box">
+            <div class="formula" id="formulaBox"></div>
+          </div>
+
+          <div class="explain" id="explainBox"></div>
+
+          <div class="summary">
+            <span class="summary-title">Главная мысль:</span>
+            <span class="summary-line">сначала смотри на знак между квадратами.</span>
+            <span class="summary-line"><strong>x² − y²</strong> — это разность квадратов, а</span>
+            <span class="summary-line"><strong>x² + y²</strong> по этой формуле не раскладывается.</span>
+          </div>
+        </section>
+
+        <div class="controls">
+          <button class="secondary" id="prevBtn">Назад</button>
+          <button id="nextBtn">Дальше</button>
+          <button class="secondary" id="resetBtn">Сначала</button>
+          <button class="warn" id="autoBtn">Авто</button>
         </div>
 
-        <div class="formula-shell">
-          <div class="formula" id="formulaBox"></div>
-        </div>
+        <div class="dots" id="dots"></div>
 
-        <div class="explain" id="explainBox"></div>
-
-        <div class="summary">
-          <span class="summary-title">Главная мысль:</span>
-          <span class="summary-line">сначала смотри на знак между квадратами.</span>
-          <span class="summary-line"><strong>x² − y²</strong> — это разность квадратов, а</span>
-          <span class="summary-line"><strong>x² + y²</strong> по этой формуле не раскладывается.</span>
-        </div>
-      </section>
-
-      <div class="controls">
-        <button class="secondary" id="prevBtn">Назад</button>
-        <button id="nextBtn">Дальше</button>
-        <button class="secondary" id="resetBtn">Сначала</button>
-        <button class="warn" id="autoBtn">Авто</button>
-      </div>
-
-      <div class="dots" id="dots"></div>
-
-      <div class="footer-note">
-        Подсказка: перед применением формулы спроси себя, какой знак стоит между квадратами.
-      </div>
-    </main>
+        <div class="note">Перед применением формулы спроси себя: какой знак стоит между квадратами?</div>
+      </main>
+    </div>
   </div>
 
   <script>
     const steps = [
       {
-        title: "Шаг 1. Узнаём формулу",
-        cls: "",
-        formula: `<span class="formula-line"><span class="term term-blue">x² − y²</span> =</span><span class="formula-line">(x − y)(x + y)</span>`,
+        title: "Шаг 1. Формула",
+        size: "",
+        formula: `<span class="line"><span class="term blue">x² − y²</span> =</span><span class="line">(x − y)(x + y)</span>`,
         explain: `Это формула <strong>разности квадратов</strong>. Главный сигнал — между квадратами стоит минус.`
       },
       {
-        title: "Шаг 2. Раскрываем скобки",
-        cls: "",
-        formula: `<span class="formula-line">(x − y)(x + y)</span>`,
-        explain: `Проверим формулу не по памяти, а раскрытием скобок: каждое слагаемое первой скобки умножаем на каждое слагаемое второй.`
+        title: "Шаг 2. Скобки",
+        size: "",
+        formula: `<span class="line">(x − y)</span><span class="line">(x + y)</span>`,
+        explain: `Проверим формулу раскрытием скобок: каждое слагаемое первой скобки умножаем на каждое слагаемое второй.`
       },
       {
-        title: "Шаг 3. Получаем четыре слагаемых",
-        cls: "compact",
-        formula: `<span class="formula-line">x·x + x·y</span><span class="formula-line">− y·x − y·y</span>`,
+        title: "Шаг 3. Умножаем",
+        size: "mid",
+        formula: `<span class="line">x·x + x·y</span><span class="line">− y·x − y·y</span>`,
         explain: `После умножения появляются четыре части. Перепишем их в привычном виде.`
       },
       {
-        title: "Шаг 4. Видим противоположные выражения",
-        cls: "compact",
-        formula: `<span class="formula-line"><span class="term term-blue">x²</span> + <span class="term term-green pulse">xy</span></span><span class="formula-line"><span class="term term-green pulse">− xy</span> − <span class="term term-red">y²</span></span>`,
+        title: "Шаг 4. Противоположные",
+        size: "mid",
+        formula: `<span class="line"><span class="term blue">x²</span> + <span class="term green pulse">xy</span></span><span class="line"><span class="term green pulse">− xy</span> − <span class="term red">y²</span></span>`,
         explain: `Средние слагаемые <strong>+xy</strong> и <strong>−xy</strong> противоположны. Их сумма равна нулю.`
       },
       {
-        title: "Шаг 5. Средняя часть исчезает",
-        cls: "compact",
-        formula: `<span class="formula-line"><span class="term term-blue">x²</span> + <span class="term term-green fade">xy</span></span><span class="formula-line"><span class="term term-green fade">− xy</span> − <span class="term term-red">y²</span></span>`,
+        title: "Шаг 5. Сокращаем",
+        size: "mid",
+        formula: `<span class="line"><span class="term blue">x²</span> + <span class="term green fade">xy</span></span><span class="line"><span class="term green fade">− xy</span> − <span class="term red">y²</span></span>`,
         explain: `Остаются только первый и последний квадраты. Но последний квадрат идёт именно с минусом.`
       },
       {
-        title: "Шаг 6. Итог раскрытия",
-        cls: "compact",
-        formula: `<span class="formula-line">(x − y)(x + y) =</span><span class="formula-line"><span class="term term-blue">x² − y²</span></span>`,
+        title: "Шаг 6. Итог",
+        size: "mid",
+        formula: `<span class="line">(x − y)(x + y)</span><span class="line">= <span class="term blue">x² − y²</span></span>`,
         explain: `Это произведение даёт именно <strong>разность</strong> квадратов, а не сумму.`
       },
       {
-        title: "Шаг 7. Проверяем ошибку",
-        cls: "compact",
-        formula: `<span class="formula-line">x² + y² <span class="term term-red">≠</span></span><span class="formula-line">(x − y)(x + y)</span>`,
+        title: "Шаг 7. Ошибка",
+        size: "mid",
+        formula: `<span class="line">x² + y² <span class="term red">≠</span></span><span class="line">(x − y)(x + y)</span>`,
         explain: `В выражении <strong>x² + y²</strong> нужен плюс перед y². А произведение <strong>(x − y)(x + y)</strong> даёт минус перед y².`
       },
       {
         title: "Шаг 8. Контрпример",
-        cls: "compact",
-        formula: `<span class="formula-line">3² + 2² = 13</span><span class="formula-line">(3 − 2)(3 + 2) = 5</span>`,
+        size: "mid",
+        formula: `<span class="line">3² + 2² = 13</span><span class="line">(3 − 2)(3 + 2) = 5</span>`,
         explain: `При x = 3 и y = 2 значения разные. Значит, это не тождество.`
       },
       {
         title: "Вывод",
-        cls: "tiny",
-        formula: `<span class="formula-line"><span class="term term-blue">x² − y²</span> раскладывается</span><span class="formula-line"><span class="term term-red">x² + y²</span> так не раскладывается</span>`,
+        size: "small",
+        formula: `<span class="line"><span class="term blue">x² − y²</span></span><span class="line">раскладывается</span><span class="line"><span class="term red">x² + y²</span></span><span class="line">так не раскладывается</span>`,
         explain: `Формула разности квадратов применяется только к разности. Перед применением формулы всегда проверяем знак между квадратами.`
       }
     ];
@@ -416,7 +410,7 @@
       stepTitle.textContent = s.title;
       stepBadge.textContent = `${current + 1} / ${steps.length}`;
       formulaBox.innerHTML = s.formula;
-      formulaBox.className = 'formula' + (s.cls ? ' ' + s.cls : '');
+      formulaBox.className = 'formula' + (s.size ? ' ' + s.size : '');
       explainBox.innerHTML = s.explain;
       prevBtn.disabled = current === 0;
       nextBtn.disabled = current === steps.length - 1;
@@ -446,11 +440,6 @@
         }
       }, 2600);
     };
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight' && current < steps.length - 1) { current++; render(); stopAuto(); }
-      if (e.key === 'ArrowLeft' && current > 0) { current--; render(); stopAuto(); }
-    });
 
     render();
   </script>
